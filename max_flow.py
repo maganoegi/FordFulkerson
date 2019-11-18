@@ -62,6 +62,34 @@ g = mlib.Graph(graph)
 source = 0; sink = (nb_nodes - 1)
 maximum_flow = g.FordFulkerson(source, sink)
 
+#============================================================# 
+#     Extract from de matrix      #
+#============================================================#
+with open(input_file_name, "r") as f:
+    for index, line in enumerate(f):
+        # remove trailing \n in the end of the string
+        line = line.rstrip()
+
+        # split string into array of substrings
+        splitted = line.split(" ")
+
+        # first line is data about the flow network ...
+        if index == 0:  
+            nb_nodes = int(splitted[0])
+            
+            # use the data to create a matrix filled with zeros
+            graph = mlib.generate_matrix_of_dimension(nb_nodes, nb_nodes)
+
+        # ... and the rest are edges, whose info we insert into the matrix
+        else:    
+            source = int(splitted[0]) - 1           #======================#         
+            destination = int(splitted[1]) - 1      #  Matrix:     0-based
+            capacity = int(splitted[2])             #  Nodes:      1-based
+                                                    #  hence, "-1" here     
+            graph[source][destination] = capacity   #======================#
+                                                    
+    f.close()
+
 
 #============================================================# 
 #                    Visualisation Results                   #
