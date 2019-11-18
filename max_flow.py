@@ -22,6 +22,7 @@ graph = []
 #============================================================#
 # input_file_name = sys.argv[1]
 input_file_name = "input_network.txt"
+output_file_name = "max.flox_out.txt"
 
 #============================================================# 
 #     Extract contents file     +     Populate matrix        #
@@ -65,30 +66,14 @@ maximum_flow = g.FordFulkerson(source, sink)
 #============================================================# 
 #     Extract from de matrix      #
 #============================================================#
-with open(input_file_name, "r") as f:
-    for index, line in enumerate(f):
-        # remove trailing \n in the end of the string
-        line = line.rstrip()
 
-        # split string into array of substrings
-        splitted = line.split(" ")
-
-        # first line is data about the flow network ...
-        if index == 0:  
-            nb_nodes = int(splitted[0])
-            
-            # use the data to create a matrix filled with zeros
-            graph = mlib.generate_matrix_of_dimension(nb_nodes, nb_nodes)
-
-        # ... and the rest are edges, whose info we insert into the matrix
-        else:    
-            source = int(splitted[0]) - 1           #======================#         
-            destination = int(splitted[1]) - 1      #  Matrix:     0-based
-            capacity = int(splitted[2])             #  Nodes:      1-based
-                                                    #  hence, "-1" here     
-            graph[source][destination] = capacity   #======================#
+# for i in range(height):
+#     mlib.Graph.graph()
+#     for j in range(width):
+#         zero_line.append(0)
+# with open(output_file_name, "w") as f:
                                                     
-    f.close()
+#     f.close()
 
 
 #============================================================# 
