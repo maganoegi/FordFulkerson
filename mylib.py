@@ -117,7 +117,7 @@ class Graph:
                 v = parent[v] 
 
 
-        for i in range(sink):
-            print(str(self.graph[i]))
+        # for i in range(sink + 1):
+        #     print(str(self.graph[i]))
             
         return max_flow 

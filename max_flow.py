@@ -96,8 +96,8 @@ with open(input_file_name, "r") as f:
 #============================================================#
 print ("Max Flow of this network is = " + mlib.bcolors.GREEN + str(maximum_flow) + mlib.bcolors.ENDC)
 
-for i in range(nb_nodes):
-    print(str(graph[i]))
+# for i in range(nb_nodes):
+#     print(str(graph[i]))
 
 
 
