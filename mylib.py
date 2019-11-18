@@ -115,5 +115,9 @@ class Graph:
                 self.graph[u][v] -= path_flow 
                 self.graph[v][u] += path_flow 
                 v = parent[v] 
-  
+
+
+        for i in range(sink):
+            print(str(self.graph[i]))
+            
         return max_flow 
