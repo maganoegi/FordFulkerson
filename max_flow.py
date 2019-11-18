@@ -61,7 +61,9 @@ g = mlib.Graph(graph)
 
 # execute algorithm
 source = 0; sink = (nb_nodes - 1)
-maximum_flow = g.FordFulkerson(source, sink)
+maximum_flow, new_graph = g.FordFulkerson(source, sink)
+
+
 
 #============================================================# 
 #     Extract from de matrix      #
@@ -81,8 +83,8 @@ maximum_flow = g.FordFulkerson(source, sink)
 #============================================================#
 print ("Max Flow of this network is = " + mlib.bcolors.GREEN + str(maximum_flow) + mlib.bcolors.ENDC)
 
-# for i in range(nb_nodes):
-#     print(str(graph[i]))
+for i in range(nb_nodes):
+    print(str(new_graph[i]))
 
 
 

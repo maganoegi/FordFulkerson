@@ -119,5 +119,5 @@ class Graph:
 
         # for i in range(sink + 1):
         #     print(str(self.graph[i]))
-            
-        return max_flow 
+        new_graph = self.graph
+        return (max_flow, new_graph) 
