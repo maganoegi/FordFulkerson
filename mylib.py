@@ -120,4 +120,4 @@ class Graph:
         for i in range(sink):
             print(str(self.graph[i]))
             
-        return max_flow 
+        return Graph.graph 
