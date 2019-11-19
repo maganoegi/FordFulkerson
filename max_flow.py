@@ -12,7 +12,6 @@
 
 #!/usr/bin/python3
 import mylib as mlib
-
 #============================================================#
 #                  Variables initialization                  #
 #============================================================#
@@ -23,88 +22,15 @@ graph = []
 #============================================================#
 #              Take arguments from command-line              #
 #============================================================#
-if(len(mlib.sys.argv) != 3):
-    mlib.sys.exit(mlib.bcolors.WARNING + "====== Please provide 2 arguments: ======" + mlib.bcolors.ENDC + "\n\tInput file name describing the network,\n\tOutput file name to which to write the answers")
+if(len(mlib.sys.argv) != 2):
+    mlib.sys.exit(mlib.bcolors.WARNING + "====== Please provide 1 argument: ======" + mlib.bcolors.ENDC + "\n\tInput file name describing the network.")
 else:
     input_file_name = mlib.sys.argv[1]
-    output_file_name = mlib.sys.argv[2]
 
-#============================================================# 
-#     Extract contents file     +     Populate matrix        #
 #============================================================#
-with open(input_file_name, "r") as f:
-    for index, line in enumerate(f):
-        # remove trailing \n in the end of the string
-        line = line.rstrip()
-
-        # split string into array of substrings
-        splitted = line.split(" ")
-
-        # first line is data about the flow network ...
-        if index == 0:  
-            nb_nodes = int(splitted[0])
-            
-            # use the data to create a matrix filled with zeros
-            graph = mlib.generate_matrix_of_dimension(nb_nodes, nb_nodes)
-
-        # ... and the rest are edges, whose info we insert into the matrix
-        else:    
-            source = int(splitted[0]) - 1           #======================#         
-            destination = int(splitted[1]) - 1      #  Matrix:     0-based
-            capacity = int(splitted[2])             #  Nodes:      1-based
-                                                    #  hence, "-1" here     
-            graph[source][destination] = capacity   #======================#
-                                                    
-    f.close()
-
-#============================================================# 
-#               Apply Ford-Fulkerson algorithm               #
+#            Calculate Max flow and write to file            #
 #============================================================#
-
-# create an instance of the graph class, using our matrix
-g = mlib.Graph(graph)
-
-# execute algorithm
-source = 0; sink = (nb_nodes - 1)
-maximum_flow, new_graph = g.FordFulkerson(source, sink)
-
-
-
-#============================================================# 
-#       Extract from de matrix    +    Write to file         #
-#============================================================#
-
-with open(input_file_name, "r") as f:
-    with open(output_file_name, "w") as f2:
-        for index, line in enumerate(f):
-            # remove trailing \n in the end of the string
-            line = line.rstrip()
-
-            # split string into array of substrings
-            splitted = line.split(" ")
-
-            # first line is data about the flow network ...
-            if index == 0:
-                x = splitted[0]          #======================#         
-                y = splitted[1]   
-                f2.write(x + " " + y + " " + str(maximum_flow) + "\n") 
-
-            # ... and the rest are edges, whose info we insert into the matrix
-            else:    
-                source = splitted[0]                  
-                destination = splitted[1]         
-                f2.write(source + " " + destination + " " + str(new_graph[int(destination)-1][int(source)-1]) + "\n")  
-    f2.close()
-f.close()
-
-
-
-#============================================================# 
-#                    Visualisation Results                   #
-#============================================================#
-print(mlib.bcolors.BLUE + "\n********* " + mlib.bcolors.WARNING + "-Ford-Fulkerson-" + mlib.bcolors.BLUE + " **********\n" + mlib.bcolors.ENDC)
-
-print (mlib.bcolors.HEADER + "Max Flow of this network is = " + mlib.bcolors.FAIL + str(maximum_flow) + mlib.bcolors.ENDC)
+mlib.edmondsKarp(input_file_name)
 
 
 
