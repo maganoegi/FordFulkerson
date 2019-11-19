@@ -22,7 +22,7 @@ graph = []
 #============================================================#
 # input_file_name = sys.argv[1]
 input_file_name = "input_network.txt"
-output_file_name = "max.flox_out.txt"
+output_file_name = "max_flow_out.txt"
 
 #============================================================# 
 #     Extract contents file     +     Populate matrix        #
@@ -69,22 +69,38 @@ maximum_flow, new_graph = g.FordFulkerson(source, sink)
 #     Extract from de matrix      #
 #============================================================#
 
-# for i in range(height):
-#     mlib.Graph.graph()
-#     for j in range(width):
-#         zero_line.append(0)
-# with open(output_file_name, "w") as f:
-                                                    
-#     f.close()
+with open(input_file_name, "r") as f:
+    with open(output_file_name, "w") as f2:
+        for index, line in enumerate(f):
+            # remove trailing \n in the end of the string
+            line = line.rstrip()
+
+            # split string into array of substrings
+            splitted = line.split(" ")
+
+            # first line is data about the flow network ...
+            if index == 0:
+                x = splitted[0]          #======================#         
+                y = splitted[1]   
+                f2.write(x + " " + y + " " + str(maximum_flow) + "\n") 
+
+            # ... and the rest are edges, whose info we insert into the matrix
+            else:    
+                source = splitted[0]                  
+                destination = splitted[1]         
+                f2.write(source + " " + destination + " " + str(new_graph[int(destination)-1][int(source)-1]) + "\n")  
+    f2.close()
+f.close()
+
 
 
 #============================================================# 
 #                    Visualisation Results                   #
 #============================================================#
-print ("Max Flow of this network is = " + mlib.bcolors.GREEN + str(maximum_flow) + mlib.bcolors.ENDC)
+print(mlib.bcolors.BLUE + "********* " + mlib.bcolors.WARNING + "-Ford-Fulkerson-" + mlib.bcolors.BLUE + " **********\n" + mlib.bcolors.ENDC)
 
-for i in range(nb_nodes):
-    print(str(new_graph[i]))
+print (mlib.bcolors.HEADER + "Max Flow of this network is = " + mlib.bcolors.FAIL + str(maximum_flow) + mlib.bcolors.ENDC)
+
 
 
 
